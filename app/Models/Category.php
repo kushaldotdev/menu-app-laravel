@@ -30,7 +30,12 @@ class Category extends Model
     // Mutator for category_name
     public function setCategoryNameAttribute($val)
     {
-        $this->attributes['category_name'] = ucfirst($val);
+        $this->attributes['category_name'] = ucwords($val);
+    }
+
+    public function setCategoryHrefAttribute($val)
+    {
+        $this->attributes['category_href'] = str_replace(' ', '-', strtolower($val));
     }
 
     // **Mutator to Enforce Main Category Rule**

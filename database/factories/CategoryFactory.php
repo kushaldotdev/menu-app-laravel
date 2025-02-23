@@ -19,22 +19,29 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = "Main " . $this->faker->words(2, true);
+        $href = str_replace(' ', '-', strtolower($name));
         return [
-            'category_name' => "Main " . $this->faker->words(2, true),
+            'category_name' => $name,
+            'category_href' => $href,
             'category_description' => $this->faker->sentence(),
-            'category_logo' => $this->faker->imageUrl(100, 100, 'business', true, 'logos'),
+            // 'category_logo' => $this->faker->imageUrl(100, 100, 'business', true, 'logos'),
+            'category_logo' => "https://picsum.photos/100?random=" . $this->faker->randomNumber(1, 1000),
             'category_status' => 'active',
             'parent_category_id' => null,
         ];
     }
 
-
     public function subCategory()
     {
         return $this->state(function (array $attributes) {
+            $Category = Category::inRandomOrder()->whereNull('parent_category_id')->first();
+            $name = $Category->category_name . '-' . "Sub " . $this->faker->words(2, true);
+            $href = $name;
             return [
-                'category_name' => "Sub " . $this->faker->words(2, true),
-                'parent_category_id' => Category::inRandomOrder()->whereNull('parent_category_id')->first()->category_id,
+                'category_name' => $name,
+                'category_href' => $href,
+                'parent_category_id' => $Category->category_id,
             ];
         });
     }

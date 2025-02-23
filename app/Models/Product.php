@@ -18,6 +18,7 @@ class Product extends Model
         'product_image',
         'product_name',
         'product_description',
+        'product_long_description',
         'product_price',
         'product_veg_non_veg',
         'product_status',

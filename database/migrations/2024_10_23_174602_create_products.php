@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('product_image')->nullable();
             $table->string('product_name');
             $table->string('product_description');
+            $table->longText('product_long_description')->nullable();
             $table->decimal('product_price', 10, 2);
-            $table->enum('product_veg_non_veg', ['veg', 'non_veg', 'na'])->default('na');
+            $table->enum('product_veg_non_veg', ['veg', 'non-veg', 'n/a'])->default('n/a');
             $table->enum('product_status', ['active', 'disabled'])->default('active');
 
             // Foreign key: Link product to a subcategory

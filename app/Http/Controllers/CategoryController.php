@@ -34,12 +34,14 @@ class CategoryController extends Controller
     /**
      * Get subcategories for a given main category.
      */
-    public function getSubCategoriesByMainCategoryId($main_category_id)
+    public function getSubCategoriesByMainCategoryId($main_category_href)
     {
         // Fetch the main category
         $category = Category::whereNull('parent_category_id')
             ->with('subcategories')
-            ->find($main_category_id);
+            ->with('subcategories.products')
+            ->where('category_href', $main_category_href)
+            ->first();
 
         if (!$category) {
             return response()->json([
@@ -49,6 +51,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'main_category' => $category->category_name,
+            'main_category_href' => $category->category_href,
             'subCategories' => $category->subcategories
         ]);
     }
