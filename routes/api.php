@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FeedbackMessageController;
 use App\Http\Controllers\ProductController;
 
 
@@ -16,6 +17,9 @@ Route::prefix('categories')->controller(CategoryController::class)->group(functi
     Route::get('/', 'getAllMainCategories'); // Get all main categories
     Route::get('{main_category_href}/subcategories', 'getSubCategoriesByMainCategoryId'); // Get subcategories of a main category
 });
+Route::post('feedback', [FeedbackMessageController::class, 'storeFeedbackMessage']); // Store feedback message
+Route::get('feedbacks', [FeedbackMessageController::class, 'getAllFeedbackMessages']); // Get all feedback messages
+
 
 // Route::prefix('categories/{sub_category_id}')->controller(ProductController::class)->group(function () {
 //     Route::get('/products', 'getProductsBySubCategoryId'); // Get products under a subcategory
