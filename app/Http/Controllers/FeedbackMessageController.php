@@ -30,7 +30,7 @@ class FeedbackMessageController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:feedback_messages,email',
+                'email1' => 'required|email|unique:feedback_messages,email',
                 'message' => 'required|string',
             ], [
                 'email.unique' => 'This email has already been used. Please use a different one.',
