@@ -13,6 +13,6 @@ class FeedbackMessageSeeder extends Seeder
      */
     public function run(): void
     {
-        FeedbackMessage::factory(5)->create();
+        FeedbackMessage::factory(2)->create();
     }
 }

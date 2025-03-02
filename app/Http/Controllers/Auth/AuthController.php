@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Traits\TokenResponse;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -8,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    use TokenResponse;
+
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -35,7 +40,7 @@ class AuthController extends Controller
         ]);
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Invalid credentials!'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -55,15 +60,5 @@ class AuthController extends Controller
     {
         auth()->guard('api')->logout();
         return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => config('jwt.ttl') * 60,
-            'user' => auth('api')->user(),
-        ]);
     }
 }

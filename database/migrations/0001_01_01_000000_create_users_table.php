@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->text('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('user_type', ['admin', 'user'])->default('user');
+            $table->string('login_google', 100)->unique()->nullable();
+            $table->string('login_facebook', 100)->unique()->nullable();
+            $table->string('login_twitter', 100)->unique()->nullable();
+            $table->string('login_github', 100)->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

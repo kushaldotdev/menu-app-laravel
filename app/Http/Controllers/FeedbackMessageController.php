@@ -30,7 +30,7 @@ class FeedbackMessageController extends Controller
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
-                'email1' => 'required|email|unique:feedback_messages,email',
+                'email' => 'required|email|unique:feedback_messages,email',
                 'message' => 'required|string',
             ], [
                 'email.unique' => 'This email has already been used. Please use a different one.',
@@ -43,8 +43,7 @@ class FeedbackMessageController extends Controller
             ], 201);
         } catch (Exception $e) {
             return response()->json([
-                'error' => 'Something went wrong',
-                'message' => $e->getMessage()
+                'error' => $e->getMessage() ?? "An error occurred while creating the feedback message.",
             ], 500);
         }
     }

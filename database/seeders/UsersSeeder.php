@@ -31,6 +31,6 @@ class UsersSeeder extends Seeder
             'user_type' => 'user',
         ]);
 
-        User::factory(3)->create();
+        User::factory(2)->create();
     }
 }
